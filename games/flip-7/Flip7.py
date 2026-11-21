@@ -32,7 +32,7 @@ oi=0
 re=False
 freeze_img=Image('90009:09090:00900:09090:90009')
 flip3_img=Image('09990:00090:00990:00090:09990')
-second_img=Image('00900:09090:90009:09090:00900')
+second_img=Image('09990:90009:90009:90009:09990')
 times2_img=Image.DIAMOND
 bank_tones=[1175,1568,1760,1976,2349]
 complete_tones=[1319,1568,2637,2093,2349,3136]
@@ -282,6 +282,8 @@ def choose_from_targets(targets):
         return targets[0]
     selection=0
     s('choose player')
+    display.show(targets[selection]+1)
+    speech.say(str(targets[selection]+1),speed=60,pin=mp)
     while True:
         a,b,u,d,l,r,_,_=q()
         if (not c and a) or l or r:
@@ -534,7 +536,7 @@ def start():
             t(784,75)
             t(1046,75)
             players.append({'t':1,'s':0,'h':[],'l':'','e':False})
-        elif ((c and a) or (not c and (sh or len(players)==9))) and len(players)>1:
+        elif ((c and a) or (not c and (sh or len(players)==10))) and len(players)>1:
             rebuild_deck(False)
             player=0
             start_round()

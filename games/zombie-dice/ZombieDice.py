@@ -138,7 +138,7 @@ def start():
             play_sound(audio.SoundEffect(freq_start=1046,freq_end=1046,duration=75))
             players.append({'type':1,'score':0,'final_done':False})
         elif ((start_game_pressed and controller) or
-              ((accelerometer.is_gesture('shake') or len(players)==9) and not controller)) and len(players)>1:
+              ((accelerometer.is_gesture('shake') or len(players)==10) and not controller)) and len(players)>1:
             wheel=5
             cloc=0
             while wheel<=555:
@@ -207,7 +207,7 @@ def roll_dice():
             play_sound(audio.SoundEffect(freq_start=1047,freq_end=1047,waveform=audio.SoundEffect.WAVEFORM_TRIANGLE,duration=150))
         elif choice=='yellow':
             display.scroll('Y',delay=50)
-            play_sound(audio.SoundEffect(freq_start=523,freq_end=523,duration=150))
+            play_sound(audio.SoundEffect(freq_start=523,freq_end=523,waveform=audio.SoundEffect.WAVEFORM_SQUARE,duration=150))
         elif choice=='red':
             display.scroll('R',delay=50)
             play_sound(audio.SoundEffect(freq_start=131,freq_end=131,waveform=audio.SoundEffect.WAVEFORM_SAWTOOTH,duration=150))
@@ -239,25 +239,24 @@ def roll_dice():
             play_sound(dice_tone)
         sleep(300)
     sleep(600)
-    while len(values)!=0:
+    new_hand=[]
+    for i in range(len(values)):
         dice_tone=audio.SoundEffect()
         dice_tone.shape=audio.SoundEffect.SHAPE_LINEAR
-        if hand[0]=='green':
+        if hand[i]=='green':
             dice_tone.waveform=audio.SoundEffect.WAVEFORM_TRIANGLE
-        elif hand[0]=='yellow':
+        elif hand[i]=='yellow':
             dice_tone.waveform=audio.SoundEffect.WAVEFORM_SQUARE
-        elif hand[0]=='red':
+        elif hand[i]=='red':
             dice_tone.waveform=audio.SoundEffect.WAVEFORM_SAWTOOTH
-        if values[0]=='brain':
+        if values[i]=='brain':
             display.show(Image.PACMAN)
             dice_tone.freq_start=1047
             dice_tone.freq_end=2093
             dice_tone.duration=300
             play_sound(dice_tone)
             brains+=1
-            values.pop(0)
-            hand.pop(0)
-        elif values[0]=='runner':
+        elif values[i]=='runner':
             display.show(Image.STICKFIGURE)
             dice_tone.duration=15
             dice_tone.vol_end=255
@@ -270,18 +269,17 @@ def roll_dice():
                 dice_tone.freq_end=748
                 play_sound(dice_tone)
                 sleep(50)
-            values.pop(0)
-        elif values[0]=='shotgun':
+            new_hand.append(hand[i])
+        elif values[i]=='shotgun':
             display.show(Image.SKULL)
             dice_tone.freq_start=263
             dice_tone.freq_end=132
             dice_tone.duration=300
             play_sound(dice_tone)
             shotguns+=1
-            values.pop(0)
-            hand.pop(0)
         display.clear()
         sleep(600)
+    hand[:]=new_hand
 def bank():
     players[player]['score']+=brains
     display.scroll(players[player]['score'],delay=50)
@@ -298,18 +296,24 @@ def bank():
     return next()
 def next():
     global player,final_round
-    if players[player]['score'] >= limit:
+    other_best=0
+    for i in range(len(players)):
+        if i!=player and players[i]['score']>other_best:
+            other_best=players[i]['score']
+    if not final_round and players[player]['score'] >= limit:
         for i in range(len(last_tones)):
             play_sound(audio.SoundEffect(freq_start=last_tones[i], freq_end=last_tones[i], duration=140))
         play_sound(audio.SoundEffect(freq_start=784, freq_end=784, duration=800))
-        if final_round:
-            speech.pronounce('dhax7 reh4ker6d /hae7z bih7n biy3tax8n. dhax7 rih7mey4nih7nx pley5er8rz /hae7v ax8 chae6ns tax8 biy5t dhih7s nuw3 skoh4r - ae7nd kley4m vih3ktax6riy8.',pin=music_pin)
-        else:
-            speech.pronounce('fay4nax7l raw3nd. eh3vriy6wah7n /hae6z wah4n moh5r ter4n tax8 biy6t dhih7s skoh8r. ih6f now6 wah5n kae4n, yuw4 wih3n.',pin=music_pin)
+        speech.pronounce('fay4nax7l raw3nd. eh3vriy6wah7n /hae6z wah4n moh5r ter4n tax8 biy6t dhih7s skoh8r. ih6f now6 wah5n kae4n, yuw4 wih3n.',pin=music_pin)
         final_round=True
         players[player]['final_done']=True
     elif final_round:
         players[player]['final_done']=True
+        if players[player]['score'] > other_best and any(not p['final_done'] for p in players):
+            for i in range(len(last_tones)):
+                play_sound(audio.SoundEffect(freq_start=last_tones[i], freq_end=last_tones[i], duration=140))
+            play_sound(audio.SoundEffect(freq_start=784, freq_end=784, duration=800))
+            speech.pronounce('dhax7 reh4ker6d /hae7z bih7n biy3tax8n. dhax7 rih7mey4nih7nx pley5er8rz /hae7v ax8 chae6ns tax8 biy5t dhih7s nuw3 skoh4r - ae7nd kley4m vih3ktax6riy8.',pin=music_pin)
     if final_round:
         done=True
         for i in range(len(players)):

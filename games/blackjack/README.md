@@ -32,9 +32,9 @@ A small blackjack game. You start with 100 coins and a bet of 10. Beat the deale
 | --- | --- |
 | Raise the bet | Touch the logo |
 | Lower the bet | Touch pin 1 or pin 2 |
-| Deal, or hit | Button A |
+| Deal, hit, or accept a double | Button A |
 | Stand, or decline a double | Button B |
-| Hear your coins and current bet | Hold the board with the logo end pointing down |
+| Hear your coins and current bet (while betting) | Hold the board with the logo end pointing down |
 | Hear the remaining deck (while betting) | Button B |
 
 ### Kitronik :GAME Controller
@@ -43,9 +43,9 @@ A small blackjack game. You start with 100 coins and a bet of 10. Beat the deale
 | --- | --- |
 | Raise the bet | Joypad Right |
 | Lower the bet | Joypad Left |
-| Deal, or hit | Fire 1 |
+| Deal, hit, or accept a double | Fire 1 |
 | Stand, or decline a double | Fire 2 |
-| Hear your coins and current bet | Joypad Up |
+| Hear your coins and current bet (while betting) | Joypad Up |
 | Hear the remaining deck (while betting) | Fire 2 |
 
 The logo-down gesture means the top of the board, where the logo is, points toward the floor. It is not the same as turning the display face down.
@@ -73,14 +73,14 @@ During a hand, the control that raises the bet (the logo, or Joypad Right) shows
 
 ### Your turn
 
-- **Hit:** Button A (or **Fire 1**). You get another card. Your new total is scrolled and spoken.
+- **Hit:** Button A (or **Fire 1**). You get another card. Your new total is scrolled and spoken. Reaching exactly 21 passes straight to the dealer.
 - **Stand:** Button B (or **Fire 2**). The dealer plays.
 - **Show your hand:** Touch the logo (or press **Joypad Right**). The board plays each of your cards, then the dealer's visible card.
 - If you go over 21, you bust and lose the hand.
 
 ### The dealer's turn
 
-The dealer's hidden card is revealed. The dealer's total is announced, and the dealer draws until reaching at least 17, then stands. If the dealer goes over 21, you win.
+The dealer's total (including the hidden card) is scrolled and spoken. The dealer draws until reaching at least 17, then stands. If the dealer goes over 21, you win.
 
 ### The result
 
@@ -89,7 +89,7 @@ The dealer's hidden card is revealed. The dealer's total is announced, and the d
 - **Push:** your total equals the dealer's. Your coins do not change.
 - Your new coin total is scrolled and spoken.
 
-If your coins reach zero, the board resets the program and starts over with 100 coins. If your bet is larger than your remaining coins, it is reduced to the nearest multiple of five.
+If your coins reach zero, the board resets the program and starts over with 100 coins. If your bet is larger than your remaining coins, it is lowered to the next multiple of five down (or 1 coin if you have fewer than five).
 
 ## Card values
 
@@ -110,7 +110,6 @@ The deck has 52 cards: sixteen ten-value cards and four each of ace through nine
 | A lower rising swoosh | The dealer draws a card |
 | A tone for each card | The card's value: the ace is highest, then the ten, then 9 down to 2 |
 | A tone that rises with the bet | You raised or lowered the bet |
-| A short high beep | A menu or status action |
 | A long rising fanfare | You won a hand |
 | A falling four-note phrase and a low tone | You lost a hand |
 | Two very low tones | A bust |

@@ -278,7 +278,11 @@ while True:
             music.pitch(750, duration=100, wait=False, pin=music_pin)
             sleep(300)
         elif accelerometer.is_gesture('shake'): 
+            if playing:
+                music.stop()
+                playing = False
             mode = 'set_tempo'
+            display.scroll(tempo, delay=70, wait=False)
             sleep(200)
 
         elif is_face_down(): 
@@ -297,7 +301,6 @@ while True:
             sleep(300)
 
     elif mode == 'set_tempo':
-        display.scroll(tempo, delay=70, wait=False)
         if not playing:
             music.set_tempo(bpm=tempo)
             music.play(['G5:1','R:1','R:1','R:1'], loop=True, wait=False, pin=music_pin)
@@ -306,10 +309,12 @@ while True:
         if action_a and tempo > 40:
             tempo -= 1
             music.set_tempo(bpm=tempo)
+            display.scroll(tempo, delay=70, wait=False)
             sleep(50)
         elif action_b and tempo < 320:
             tempo += 1
             music.set_tempo(bpm=tempo)
+            display.scroll(tempo, delay=70, wait=False)
             sleep(50)
         if shift_pressed or (controller and special_pressed): #
             music.stop()

@@ -42,18 +42,18 @@ The default game uses eight symbols, a four-symbol code, and the simplest feedba
 
 | Action | Control |
 | --- | --- |
-| Left | Joypad Left |
-| Right | Joypad Right |
-| Up | Joypad Up |
-| Down | Joypad Down |
+| Left, or start from the menu | Joypad Left |
+| Right, or next setting | Joypad Right |
+| Up, or increase a value | Joypad Up |
+| Down, or decrease a value | Joypad Down |
 | Submit a guess | Fire 1 |
 
 ## How to play
 
 ### Choose the settings
 
-1. On startup, the board says "Welcome to Mastermind" and shows a heart.
-2. Press **Button A** (or **Joypad Left**) to start with the current settings.
+1. On startup, the board says "Welcome to Mastermind" and shows a heart. The first setting (**Available symbols**) is already selected.
+2. Press **Button A** (or **Joypad Left**) to start with the current settings. The board says "Begin."
 3. Press **Button B** (or **Joypad Right**) to move to the next setting. The board speaks the setting name and its current value.
 4. Press **Up** or **Down** to change the current setting. The board speaks the new value.
 
@@ -61,9 +61,9 @@ The three settings are:
 
 | Setting | Range | Default | What it does |
 | --- | --- | --- | --- |
-| Alphabet size | 5 to 15 | 8 | How many different symbols the code can use. Symbols are 0 to 9, then A to E. |
-| Code length | 3 to 5 | 4 | How many symbols are in the secret code. |
-| Feedback style | 0 to 2 | 0 | How much information you get after each guess. |
+| Available symbols | 5 to 15 | 8 | How many different symbols the code can use. Symbols are 0 to 9, then A to E. |
+| Length of code | 3 to 5 | 4 | How many symbols are in the secret code. |
+| Game difficulty | 0 to 2 | 0 | How much feedback you get after each guess. |
 
 ### The feedback styles
 
@@ -104,8 +104,8 @@ This is the clearest style for audio play.
 | A high beep (C7) and top-row light | An exact match |
 | A middle beep (C5) and middle-row light | A correct symbol in the wrong position |
 | A low buzz (C3) and bottom-row light | A symbol that is not in the code |
-| A sad face and a low buzz | No symbols matched at all |
-| Two low tones and speech | You submitted duplicates |
+| A neutral face and a low buzz (C3) | No symbols matched at all |
+| An X, two low tones, and speech | You submitted duplicates |
 | A rising fanfare and speech | You broke the code |
 | Spoken setting names and values | While you change the settings |
 | Spoken guess count | How many guesses you used |
@@ -130,7 +130,7 @@ There is no save. The settings are variables in the program, so pressing reset r
 ## Tips
 
 - The first guess starts as all 0s. If you need to confirm the 0 tone, press Up and then Down on a position to hear it.
-- Start with alphabet size 5 and code length 3. Increase the alphabet before increasing the length.
+- Start with 5 available symbols and a code length of 3. Increase the symbols before increasing the length.
 - Use style 1 first. It tells you exactly which positions are right, which makes the logic much easier to follow.
 - In style 1, a middle beep means the symbol belongs somewhere else. Move it rather than replacing it.
 - In style 2, keep track of the exact and misplaced counts. A guess with four exact and zero misplaced is a win.

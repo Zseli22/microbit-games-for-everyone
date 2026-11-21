@@ -41,14 +41,15 @@ In a multiplayer game, you are trying to be the last player with points left. In
 
 | Action | Bare micro:bit | Kitronik :GAME Controller |
 | --- | --- | --- |
-| Roll, or commit the kept dice | Button A to roll; Shake to commit | Fire 1 |
+| Roll the dice | Button A, or shake the board | Fire 1 |
+| Commit the kept dice | Shake the board | Fire 1 |
 | Cycle through the dice | Button A | Joypad Left or Right |
-| Keep the selected die | Button B | Fire 2 |
-| Show every player's score | Button B, when not re-rolling | Fire 2, when not re-rolling |
-| Show the current total | Touch the logo | Joypad Up |
-| Switch between keep mode and undo mode | Touch pin 1 or pin 2 | Joypad Down |
+| Keep (or unkeep) the selected die | Button B | Fire 2 |
+| Show every player's score | Button B, when not choosing dice | Fire 2, when not choosing dice |
+| Hear the current kept total | Touch the logo (while choosing dice) | Joypad Up (while choosing dice) |
+| Switch between keep mode and undo mode | Touch pin 1 or pin 2 (while choosing dice) | Joypad Down (while choosing dice) |
 
-The same physical control has two roles in some places. Button B (or Fire 2) keeps a die while you are re-rolling, and shows all scores when you are not. Button A (or Fire 1) rolls at the start of a turn, and commits the kept dice during a re-roll.
+Some controls have two roles depending on the phase. Button B (or Fire 2) keeps or unkeeps a die while you are choosing dice, and shows all scores when you are waiting to roll. On a bare board, Button A rolls when waiting and cycles dice after a roll, while Shake can both roll and commit kept dice. On the controller, Fire 1 handles start, roll, and commit.
 
 ## How to play
 
@@ -58,18 +59,18 @@ The same physical control has two roles in some places. Button B (or Fire 2) kee
 2. Press **Button A** (or **Joypad Left**) to add a human. The display shows H and plays a high two-note phrase.
 3. Press **Button B** (or **Joypad Right**) to add a computer. The display shows C and plays a lower two-note phrase.
 4. Add between 1 and 10 players.
-5. Shake the board (or press **Fire 1**) to start. If there is more than one player, a wheel spins and the board announces who goes first. If there is one player, it says "Starting one player game." On a bare board, the game can also start automatically when nine players have been added.
+5. Shake the board (or press **Fire 1**) to start. If there is more than one player, a wheel spins and the board announces who goes first. If there is one player, it says "Starting one player game." On a bare board, the game starts automatically when 10 players have been added.
 
 ### A turn
 
-1. Press **Button A** (or **Fire 1**) to roll all six dice. Each die is shown and played as a tone.
+1. Press **Button A** or shake the board (or press **Fire 1**) to roll all six dice. The dice are sorted from highest to lowest, and each die is shown and played as a tone (C5 for 1 up to A5 for 6).
 2. Choose which dice to keep:
-   - **Cycle** through the unkept dice with Button A (or Joypad Left and Right).
-   - **Keep** the selected die with Button B (or **Fire 2**). It is removed from the re-roll pool and added to your kept dice.
-   - **Undo a keep:** touch pin 1 or pin 2 (or press **Joypad Down**) to switch to undo mode. The board plays a short high beep. Cycle to a kept die and press Button B (or **Fire 2**) to return it to the pool. Press the same control again to switch back to keep mode.
-3. Shake the board (or press **Fire 1**) to commit the kept dice. The unkept dice are re-rolled. You must have kept at least one die before you can commit.
-4. Repeat steps 2 and 3 until all six dice are kept. The round then scores automatically.
-5. The board announces the total, the score change, and whose turn is next.
+   - **Cycle** through the unkept dice with Button A (or Joypad Left and Right). Cycle at least once to highlight a die before keeping it.
+   - **Keep** the highlighted die with Button B (or **Fire 2**). It moves out of the re-roll pool and into your kept dice.
+   - **Undo a keep:** if you have kept at least one die from the current roll, touch pin 1 or pin 2 (or press **Joypad Down**) to switch to undo mode. The board plays a short high beep. Cycle to a kept die from this roll and press Button B (or **Fire 2**) to return it to the pool. Press the same control again (or unkeep your last kept die) to return to keep mode. You cannot undo dice committed on earlier rolls.
+3. Shake the board (or press **Fire 1**) to commit the kept dice. You must keep at least one die from the current roll before you can commit; committing with none kept does nothing.
+4. If fewer than six dice are committed, press **Button A** or shake (or **Fire 1**) again to roll the remaining dice. When five dice are already committed and you roll the sixth, that final die is kept automatically.
+5. Once all six dice are kept, the round scores automatically, and the board announces the total, the score change, and whose turn is next.
 
 ### The scoring rule
 
@@ -87,7 +88,7 @@ The bonus round starts only after all six dice are kept, and only if the final t
 
 1. The board rolls a fresh set of six dice. The dice you kept are not reused.
 2. The target number is **your total minus 30**. For example, a total of 34 has a target of 4.
-3. Every die showing the target is kept aside. The other dice are re-rolled, and you keep every new match. This repeats until a roll produces no match.
+3. The bonus round runs automatically with no button input: every die showing the target is kept aside, and the remaining dice are re-rolled until a roll produces no match or all six dice match.
 4. The bonus value is **the target number times the number of matching dice**.
 5. In a multiplayer game, that value is **subtracted from the next player's score**, not yours. If it takes them below zero, they are out, and any leftover passes to the player after them. This is intentional: a big overshoot can take someone down with you.
 6. In a solo game, the same value is **added to your score**, because there is no opponent to attack.
@@ -112,11 +113,11 @@ If a penalty is larger than your remaining score, you are knocked out. The lefto
 
 ### The current total
 
-Touch the logo (or press **Joypad Up**) to hear the current sum of kept and unkept dice. The unkept dice will change when you re-roll, so this is a provisional total, not the final score.
+While choosing dice, touch the logo (or press **Joypad Up**) to hear the sum of all dice you have kept so far (both previously committed dice and dice kept from the current roll). Unkept dice are not included.
 
 ### All scores
 
-Press **Button B** (or **Fire 2**) when you are not re-rolling to hear every player's score. Each score is scrolled and counted with tones.
+Press **Button B** (or **Fire 2**) when you are waiting to roll to hear every player's score. Each score is scrolled and counted with tones.
 
 ## Reading the numbers
 
@@ -135,17 +136,18 @@ For example, 34 is three middle beeps and four low beeps. There is no hundreds t
 | Sound | Meaning |
 | --- | --- |
 | A run of dice faces and tones | The dice are rolling |
-| A tone for each die | Its value, from 1 to 6 |
-| Two high tones | A die was kept |
-| Two lower tones | A die was unkept |
+| A tone from C5 (1) to A5 (6) | A die's value, sorted highest to lowest |
+| A double-octave high tone | A die was kept |
+| An octave-higher tone | A die was unkept |
 | A short high beep | Switched to undo mode |
 | A short low beep | Switched back to keep mode |
-| A rising sweep | Your score changed; the pitch moves from the old score to the new one |
-| A long celebratory jingle, then more dice | The bonus round is starting |
-| A descending sweep and a low tone | A player was knocked out |
+| A six-note chime, then counted beeps | Your six-die round total |
+| A falling or rising sweep | A score changed; the pitch moves from the old score to the new one (falling on a loss or attack, rising on a solo bonus) |
+| A celebratory jingle, then automatic rolls | The bonus round is starting |
+| A descending sweep, low tone, and spoken "You're out" | A player was knocked out |
 | A fanfare and speech | A player won |
 | Spoken "next round" or a player number | The turn is passing |
-| Counted beeps | A score or total |
+| Counted beeps | A score or kept total |
 
 ## Scoring and saving
 
@@ -166,7 +168,7 @@ For example, 34 is three middle beeps and four low beeps. There is no hundreds t
 - Speech announces the players, the turn changes, when a player is out, and the winner.
 - Dice values are tones and faces, not spoken words. The tone for each die tells you its value.
 - Scores and totals are counted as tens and ones. Learn the two-tone code above.
-- The controller gives each action a separate physical button. It is the easier input; the bare-board layout uses Button B for two different things depending on the phase.
+- The controller separates cycling dice (Joypad Left and Right) from rolling and committing (Fire 1), which makes choosing dice smoother than on a bare board. Fire 2 still handles both keeping dice and checking all scores depending on the phase.
 - The keep/undo mode is announced with a short high or low beep, so you know which mode you are in.
 - The scoring rule is unusual. Read the bonus examples above before your first game.
 - There is no pause. Pressing reset returns to the last save while 36 stays installed.
@@ -176,7 +178,7 @@ For example, 34 is three middle beeps and four low beeps. There is no hundreds t
 - Aim for exactly 30. It is the only total that changes nothing.
 - Going over 30 is an attack on the next player. A higher target is worth more per match, so a total close to 36 can be a strong attack.
 - In a solo game, the same bonus adds to your score, so a controlled overshoot is a way to climb toward 54.
-- Keep at least one die before committing. Committing with no new keeps just re-rolls the same number of dice.
-- Use undo mode to fix a mistaken keep before you commit.
+- You must keep at least one die from each roll before you can commit.
+- Use undo mode to fix a mistaken keep from the current roll before you commit.
 - In multiplayer, survival matters more than a big score. Do not take a risk that could take you to zero unless you can take someone with you.
-- Check the current total before committing. It includes unkept dice, so treat it as a preview, not a promise.
+- Check your kept total with the logo (or Joypad Up) before committing so you know how close you are to 30.

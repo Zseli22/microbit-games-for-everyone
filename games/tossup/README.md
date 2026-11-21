@@ -59,7 +59,7 @@ You can bank at any time to add your unbanked total to your score. The first pla
 4. Add between 1 and 10 players.
 5. Set the target score. The default is 100. Touch the logo (or press **Joypad Up**) to raise it by 10; touch pin 1 or pin 2 (or press **Joypad Down**) to lower it by 10, down to a minimum of 50.
 6. Turn the display face down (or press **Fire 2**) to hear the current target.
-7. Shake the board (or press **Fire 1**) to start. If there is more than one player, a wheel spins and the board announces who goes first. If there is one player, it says "Starting one player game." On a bare board, the game can also start automatically when nine players have been added.
+7. Shake the board (or press **Fire 1**) to start. If there is more than one player, a wheel spins and the board announces who goes first. If there is one player, it says "Starting one player game." On a bare board, the game starts automatically when 10 players have been added.
 
 ### A turn
 
@@ -70,7 +70,7 @@ You can bank at any time to add your unbanked total to your score. The first pla
    - At 2, you roll 8.
    - This continues down to 1 die at 9.
    - At 10, you are back to 10 dice, and the pattern repeats for 20, 30, and so on.
-3. Each die is one of three types:
+3. Each six-sided die has three green faces, two yellow faces, and one red face:
    - **Green** adds 1 point. The display shows a bar at the top.
    - **Yellow** does nothing. The display shows a bar in the middle.
    - **Red** is dangerous. The display shows a bar at the bottom.
@@ -119,11 +119,12 @@ For example, 34 is three middle beeps and four low beeps. 120 is one high beep a
 | High two-note phrase | A human player was added |
 | Lower two-note phrase | A computer player was added |
 | Wheel clicks and a noise burst | The starting player is being chosen |
-| A noise sweep, then die tones | The dice are rolling |
+| A run of random tones with a fading echo | The dice are rolling |
 | A tone for each die | Its type: green C6, yellow C5, red C4 |
-| Six rising tones | Every die in the roll was green |
+| Six-note celebration melody and a smile | Every die in the roll was green |
 | Two low tones and a sad face | You busted |
 | A rising tone for each point, then counted beeps | You banked |
+| A six-note phrase and speech | The final round begins, or the score to beat is raised |
 | A fanfare and speech | A player won |
 | Spoken target | When you ask for the target |
 | Spoken player numbers | Whose turn it is |

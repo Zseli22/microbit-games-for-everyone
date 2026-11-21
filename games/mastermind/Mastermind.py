@@ -1,7 +1,5 @@
 from microbit import *
 import random,speech
-pin1.set_touch_mode(pin1.CAPACITIVE)
-pin2.set_touch_mode(pin2.CAPACITIVE)
 controller=False
 if pin15.read_digital()==1:
     controller=True

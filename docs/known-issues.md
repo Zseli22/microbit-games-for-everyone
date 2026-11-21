@@ -41,9 +41,57 @@ The copy now works like this:
 
 The file is slightly smaller than before, so it still fits the filesystem limit.
 
+### K-05 — Tossup deleted saved games on the controller without confirmation
+
+**Status:** fixed.
+
+In `load_save()`, the confirmation check unpacked the wrong control index on the controller, binding deletion confirmation to Fire 2 instead of Joypad Down. Pressing Fire 2 asked to delete and immediately confirmed on the same loop tick. It now binds to Joypad Down as documented.
+
+### K-06 — Zombie Dice could drop runner dice and play the wrong die waveform
+
+**Status:** fixed.
+
+When a runner rolled ahead of a brain or shotgun in the same three-die roll, the reveal loop removed the first die in `hand` (the runner) and kept a later die instead, while also playing the runner's waveform for subsequent dice. The loop now resolves each die by index and keeps the exact runner dice in `hand`. Yellow cup draws also use the square waveform consistently.
+
+### K-07 — Blackjack and Mastermind set capacitive touch mode before controller detection
+
+**Status:** fixed.
+
+Both scripts called `pin1.set_touch_mode(pin1.CAPACITIVE)` and `pin2.set_touch_mode(pin2.CAPACITIVE)` at startup before checking for the controller. Those top-level calls have been removed so touch mode is only enabled on a bare board.
+
+### K-08 — Blackjack betting could block all-in bets or drop the bet to zero
+
+**Status:** fixed.
+
+Raising the bet could not reach all-in whenever the coin count was not a multiple of five, and losing down to 1 to 4 coins set the bet to 0. Betting now steps cleanly to all-in and down to 1, and post-loss bet reduction floors at 1 coin.
+
+### K-09 — Bare-board player setup auto-started at nine players instead of ten
+
+**Status:** fixed.
+
+Zombie Dice, Tossup, 36, and Flip 7 checked for 9 players instead of 10 in the bare-board auto-start condition, preventing a tenth player from being added on a bare board. All four now auto-start at 10 players.
+
+### K-10 — Final-round record announcements and Tossup bust flow
+
+**Status:** fixed.
+
+In Tossup and Zombie Dice, the final-round "record has been beaten" announcement triggered whenever any player ended a turn at or above the base target, even without beating the leader. Both now announce only when a player beats the highest other score while at least one player still has a turn left. Tossup also returns immediately after a bust so ending the final round on a bust no longer plays the all-green chime at the start of the next game.
+
+### K-11 — Display, speed, and audio polish fixes
+
+**Status:** fixed.
+
+- **Breakout:** Losing a life during a speed powerup now restores `original_speed` before clamping and saving.
+- **Composer:** Entering tempo mode stops active melody playback so the metronome click always starts, and the BPM scrolls on entry and change rather than restarting every loop.
+- **Flip 7:** The Second Chance card now uses a distinct circle pattern instead of duplicating `×2`'s diamond, and target selection announces the initially highlighted player.
+- **36:** An exact knockout with no leftover penalty no longer plays a flat sweep for the next player's unchanged score.
+- **Vibration Challenge:** Buffered Button A presses during the reference pulses are cleared before test pulses begin.
+
 ## Not defects
 
 These are intentional and are explained in the relevant guides:
+
+- **Breakout's speed climbs past the comeback floor during a life.** The game keeps speeding up until it becomes hard to keep up with; losing a life eases the speed back to give you a chance at a comeback.
 
 - **36's bonus and leftover-penalty behaviour.** Going over 30 rolls extra dice and attacks the next player. A leftover penalty passing to the next player is part of the design; you can take someone down with you.
 - **Mastermind feedback style 0.** It is the easier variant: you need the correct set of symbols, not the correct order.

@@ -161,7 +161,7 @@ def start():
             display.scroll(limit,delay=50)
             speech.say('You are playing to,'+str(limit)+'.',pin=music_pin)
         elif ((start_game_pressed and controller) or
-              ((accelerometer.is_gesture('shake') or len(players)==9) and not controller)) and len(players)>0:
+              ((accelerometer.is_gesture('shake') or len(players)==10) and not controller)) and len(players)>0:
             if len(players)==1:
                 speech.pronounce('staa5rtih7nx wah4n pley6er gey8m.',pin=music_pin)
             else:
@@ -188,7 +188,7 @@ def load_save():
     announce_title()
     speech.pronounce('wuh6d yuw6 lay5k tuw8 rih7zuw5m yer7 sey5vd gey7m?',pin=music_pin)
     while True:
-        _,_,_,action_a_pressed,action_b_pressed,_,_,down_pressed,_,_=update()
+        _,_,_,action_a_pressed,action_b_pressed,_,down_pressed,_,_,_=update()
         if action_a_pressed:
             with open('save.txt','r') as save:
                 players=eval(save.readline())
@@ -257,6 +257,7 @@ def roll_dice():
         play_sound(audio.SoundEffect(freq_start=196,freq_end=196,duration=600,vol_end=255))
         play_sound(audio.SoundEffect(freq_start=139,freq_end=139,duration=600,vol_end=255))
         next()
+        return
     for i in range(hand.count(0)):
         total+=1
         hand.remove(0)
@@ -307,28 +308,34 @@ def win_game(winner):
     start()
 def next():
     global limit,player,total,final_round
-    if players[player]['score'] >= limit:
-        if len(players)==1:
-            display.scroll('you win')
-            speech.pronounce('yuw6 /hae6 riy4cht dhax8 taa4rgih6t skoh4r. Yuw4 wih3n.',pin=music_pin)
-            for i in range(len(win_tones)):
-                play_sound(audio.SoundEffect(freq_start=win_tones[i], freq_end=win_tones[i], duration=40))
-            play_sound(audio.SoundEffect(freq_start=2093, freq_end=2093, duration=1000))
-            clear_save()
-            reset_game()
-            start()
-            return
+    other_best=0
+    for i in range(len(players)):
+        if i!=player and players[i]['score']>other_best:
+            other_best=players[i]['score']
+    if players[player]['score'] >= limit and len(players)==1:
+        display.scroll('you win')
+        speech.pronounce('yuw6 /hae6 riy4cht dhax8 taa4rgih6t skoh4r. Yuw4 wih3n.',pin=music_pin)
+        for i in range(len(win_tones)):
+            play_sound(audio.SoundEffect(freq_start=win_tones[i], freq_end=win_tones[i], duration=40))
+        play_sound(audio.SoundEffect(freq_start=2093, freq_end=2093, duration=1000))
+        clear_save()
+        reset_game()
+        start()
+        return
+    if not final_round and players[player]['score'] >= limit:
         for i in range(len(last_tones)):
             play_sound(audio.SoundEffect(freq_start=last_tones[i], freq_end=last_tones[i], duration=140))
         play_sound(audio.SoundEffect(freq_start=784, freq_end=784, duration=800))
-        if final_round:
-            speech.pronounce('dhax7 reh4ker6d /hae7z bih7n biy3tax8n. dhax7 rih7mey4nih7nx pley5er8rz /hae7v ax8 chae6ns tax8 biy5t dhih7s nuw3 skoh4r - ae7nd kley4m vih3ktax6riy8.',pin=music_pin)
-        else:
-            speech.pronounce('fay4nax7l raw3nd. eh3vriy6wah7n /hae6z wah4n moh5r ter4n tax8 biy6t dhih7s skoh8r. ih6f now6 wah5n kae4n, yuw4 wih3n.',pin=music_pin)
+        speech.pronounce('fay4nax7l raw3nd. eh3vriy6wah7n /hae6z wah4n moh5r ter4n tax8 biy6t dhih7s skoh8r. ih6f now6 wah5n kae4n, yuw4 wih3n.',pin=music_pin)
         final_round=True
         players[player]['final_done']=True
     elif final_round:
         players[player]['final_done']=True
+        if players[player]['score'] > other_best and any(not p['final_done'] for p in players):
+            for i in range(len(last_tones)):
+                play_sound(audio.SoundEffect(freq_start=last_tones[i], freq_end=last_tones[i], duration=140))
+            play_sound(audio.SoundEffect(freq_start=784, freq_end=784, duration=800))
+            speech.pronounce('dhax7 reh4ker6d /hae7z bih7n biy3tax8n. dhax7 rih7mey4nih7nx pley5er8rz /hae7v ax8 chae6ns tax8 biy5t dhih7s nuw3 skoh4r - ae7nd kley4m vih3ktax6riy8.',pin=music_pin)
     if final_round:
         done=True
         for i in range(len(players)):

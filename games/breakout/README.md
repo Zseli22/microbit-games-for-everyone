@@ -17,7 +17,7 @@ Steer a ball around a five by five grid, collect blocks, and keep the ball from 
 
 A small arcade game on the micro:bit's 5 by 5 LED matrix. A ball moves around the grid. You influence its direction with tilt or the controller's four direction buttons. Blocks appear; landing on one collects it and scores a point. Every block collected spawns another. Every so often a powerup appears.
 
-If the ball leaves the grid, it starts to fall. A warning arrow shows which edge, and a repeating tone tells you to push it back. While it falls, your health drains. If health reaches zero, you lose a life.
+If the ball leaves the grid, it starts to fall. A flashing bar shows which edge, and an edge-specific repeating tone tells you to push it back. While it falls, your health drains and the warning pulses faster. If health reaches zero, you lose a life.
 
 The game is fully sonified: the ball's column and row are played as two tones every time it moves, so you can follow it without the display.
 
@@ -62,14 +62,14 @@ The direction buttons match the screen: Up moves the ball up, Down moves it down
 4. Tilt or press a direction to influence the next move. The ball still moves randomly, but it is much more likely to move in the direction you chose.
 5. Land on a block to collect it. You score 1 point, or 2 while a multiplier is active. A sparkle plays, the block disappears, and a new block spawns with its position announced.
 6. Every 100 points earns an extra life.
-7. If the ball leaves the grid, it falls. A warning arrow shows the edge, and a repeating tone plays. Push the ball back:
+7. If the ball leaves the grid, it falls. A flashing five-LED bar lights that edge, and a repeating tone plays at a pitch specific to that side (pulsing faster as your health gets lower). Push the ball back:
    - If it fell off the top, press **Down** (or lift the top edge).
    - If it fell off the bottom, press **Up** (or lift the bottom edge).
    - If it fell off the left, press **Right** (or lift the left edge).
    - If it fell off the right, press **Left** (or lift the right edge).
    The idea is to push the ball back onto the grid. While it is falling, health drains. If health reaches zero, you lose a life.
-8. After a lost life, the ball returns to the centre, the blocks are cleared, health returns to 100, and the score and lives carry over. If you still have lives, the game saves your score, lives, and speed.
-9. When you run out of lives, the board resets the program.
+8. After a lost life, the ball returns to the centre, the blocks are cleared, health returns to 100, and teleports, multipliers, and active speed powerups are cleared. Your score and remaining lives carry over, and if the speed had passed the comeback floor, it eases back so you have room to recover. If you still have lives, the game saves your score, lives, and speed.
+9. When you run out of lives, the game deletes its save and resets the board.
 
 ### Powerups
 
@@ -96,7 +96,7 @@ A quick tap only reads the block positions. Hold through the whole block readout
 
 ### Teleport
 
-If you have at least one teleport, press **Button B** (or **Fire 2**). The ball jumps to a random block, collects it, and uses one teleport. This is a way to score without steering, and an emergency way to avoid a fall.
+If you have at least one teleport, press **Button B** (or **Fire 2**) during normal play. The ball jumps to a random block, collects it, and uses one teleport. This is a way to score without steering, or to escape an edge before the ball starts falling (teleport is not available once a fall has begun).
 
 ## Reading the grid
 
@@ -110,7 +110,7 @@ The five column tones, from left to right, are:
 | 4 | F5 |
 | 5 (right) | G5 |
 
-The five row tones, from top to bottom, are the same five pitches. A position is announced as **column first, then row**. For example, the top-left corner is 523 then 523; the bottom-right corner is 784 then 784.
+The five row tones, from top to bottom, are the same five pitches. A position is announced as **column first, then row**. For example, the top-left corner is C5 then C5; the bottom-right corner is G5 then G5.
 
 Block spawns use the same pattern one octave higher, from C6 to G6. Ball moves use C5 to G5. That is how you tell a new block from the ball.
 
@@ -118,18 +118,19 @@ Block spawns use the same pattern one octave higher, from C6 to G6. Ball moves u
 
 | Sound | Meaning |
 | --- | --- |
-| Two tones, normal pitch | The ball moved; column first, then row |
-| Two tones, higher pitch | A new block appeared; column first, then row |
+| Two tones, normal pitch (C5 to G5) | The ball moved; column first, then row |
+| Two tones, higher pitch (C6 to G6) | A new block appeared; column first, then row |
 | A burst of random high tones and pixels | You collected a block |
 | A rising arpeggio | Health powerup |
 | A long, busy jingle | Point multiplier |
 | A noise sweep | Teleport powerup |
-| A falling or rising sweep | Speed up or speed down |
-| A repeated warning tone | The ball is falling; push it back |
-| Six rising tones | Extra life |
-| A low tone and a sad face | You lost a life |
+| A falling sweep | Slow-down powerup |
+| A rising sweep | Speed-up powerup |
+| A repeated edge-specific warning tone | The ball is falling; push it back (pulses faster as health drops) |
+| Six-note celebration melody | Extra life |
+| A low tone and an X | You lost a life |
 | Counted beeps | A score, health value, or counter, read in hundreds, tens, and ones |
-| A very low buzz | Zero |
+| A very low buzz (C3) | Zero |
 
 ## Scoring and saving
 
@@ -138,7 +139,7 @@ Block spawns use the same pattern one octave higher, from C6 to G6. Ball moves u
 - You start with 3 lives.
 - When you lose a life and still have lives left, the game saves your score, lives, and current speed in the program's internal filesystem.
 - If you reset or unplug while Breakout stays installed, the game announces the saved score and lives and continues at the saved speed.
-- If you run out of lives, the board resets.
+- If you run out of lives, the save is erased and the board resets.
 - Flashing another program, or reflashing Breakout, erases the save.
 
 The save is written at the end of a life, not after every point. If you unplug the board in the middle of a life, you return to the last saved score when you start Breakout again.
@@ -161,4 +162,4 @@ The save is written at the end of a life, not after every point. If you unplug t
 - The multiplier makes every block worth 2 points. Collect as many as you can while it lasts.
 - The down-arrow powerup slows the game down. It is often more useful than the up-arrow powerup.
 - When the ball falls, push it back toward the centre. Do not press the direction it fell; press the opposite direction.
-- The speed slowly increases as you play. The game clamps it at a minimum, so it never becomes impossible.
+- The speed keeps climbing during a life until it becomes very hard to keep up. Losing a life eases the speed back if it had gone too fast, giving you a chance at a comeback.

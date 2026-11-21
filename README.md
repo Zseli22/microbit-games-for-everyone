@@ -105,7 +105,7 @@ Games without a save start fresh each time: Simon, Blackjack, Mastermind, and Vi
 
 The `MICROBIT` drive is not a normal window into the filesystem. It is used for flashing `.hex` files. To inspect or back up MicroPython files, you need a specialised tool such as the Mu editor's files pane. Even then, treat saves and Composer tunes as temporary: the next flash will erase them.
 
-To clear a save, flash the program again or flash another program. That replaces the filesystem.
+Most games that save let you delete or reset progress from their menu or startup prompt. You can also clear any save by flashing the program again or flashing another program, which replaces the filesystem.
 
 ## Accessibility design
 

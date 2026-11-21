@@ -111,7 +111,7 @@ def start():
             t(784,75)
             t(1046,75)
             players.append({'type':1,'score':36})
-        elif ((controller and a) or (not controller and (shake or len(players)==9))) and len(players)>0:
+        elif ((controller and a) or (not controller and (shake or len(players)==10))) and len(players)>0:
             if len(players)==1:
                 p('staa5rtih7nx wah4n pley6er gey8m.')
             else:
@@ -342,6 +342,8 @@ def scoring():
             state=next()
             if state=='restart':
                 return state
+            if subtract==0:
+                return 'continue'
             old_score=players[player]['score']
     audio.play(audio.SoundEffect(freq_start=scale(old_score,from_=(0,36),to=(50,1000)),freq_end=scale(players[player]['score'],from_=(0,36),to=(50,1000)),duration=2000,shape=audio.SoundEffect.SHAPE_LINEAR,vol_end=255),pin=music_pin)
     display.scroll(players[player]['score'],delay=50)

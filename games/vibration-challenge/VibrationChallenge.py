@@ -126,6 +126,7 @@ while True:
             sleep(300)
 
         sleep(1500)
+        update()
         state = 'game'
 
     elif state == 'game':

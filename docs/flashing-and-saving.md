@@ -68,7 +68,9 @@ A save survives a reset or unplugging while the same program stays installed. It
 
 ### Clearing a save
 
-Reflash the program. That replaces the program and its filesystem, so the game starts fresh. There is no normal file manager on the `MICROBIT` drive for deleting the save on its own.
+Most games that save include an in-game option to clear progress: Zombie Dice, Tossup, 36, and Flip 7 let you delete a saved game from the startup resume prompt, MicroFidget lets you reset one or all high scores, and Composer lets you delete saved sequences. Breakout clears its save automatically when you run out of lives.
+
+You can also clear any save by reflashing the program, which replaces the program and its entire filesystem. There is no normal file manager on the `MICROBIT` drive for deleting files individually.
 
 ### Backing up Composer tunes
 

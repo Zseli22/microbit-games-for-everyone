@@ -15,7 +15,7 @@ The push-your-luck dice game: roll brains, dodge shotguns, and bank before you b
 
 ## What it is
 
-Zombie Dice is a press-your-luck game. On your turn, you roll three dice. Brains are points, shotguns are danger, and runners go back into the cup. Keep rolling to collect more brains, or bank what you have before the third shotgun ends your turn and takes the unbanked brains with it.
+Zombie Dice is a press-your-luck game. On your turn, you roll three dice. Brains are points, shotguns are danger, and runners stay in your hand to be rolled again. Keep rolling to collect more brains, or bank what you have before the third shotgun ends your turn and takes the unbanked brains with it.
 
 The first player to reach 13 points triggers the final round. Everyone else gets one more turn, and the highest score wins.
 
@@ -63,16 +63,16 @@ The first player to reach 13 points triggers the final round. Everyone else gets
 4. Add between 2 and 10 players.
 5. Shake the board (or press **Fire 1**) to start. A wheel spins, then the board announces which player goes first.
 
-On a bare board, the game can also start automatically when nine players have been added. You can still add a tenth player if you are quick, but the automatic start is there for large groups.
+On a bare board, the game starts automatically when 10 players have been added.
 
 ### A turn
 
 1. The board shows a heart when it is your turn.
 2. Press **Button A** (or **Fire 1**) to roll.
-3. Three dice come out of the cup. Each die is green, yellow, or red, announced by a tone and a letter on the display.
+3. Three dice come out of the cup (or fewer if you already hold runners from the previous roll). Each newly drawn die is green, yellow, or red, announced by a tone and a letter on the display. If the cup runs empty mid-turn, a fresh set of 13 dice is added back to the cup.
 4. Each die shows a face:
    - **Brain** — set aside. It is worth one point if you bank.
-   - **Runner** — goes back into the cup and may be rolled again.
+   - **Runner** — stays in your hand and will be rolled again if you keep going.
    - **Shotgun** — set aside. Three shotguns end your turn.
 5. After the roll, choose:
    - **Roll again:** Button A (or **Fire 1**). The runners and any new dice are rolled.
@@ -118,14 +118,14 @@ Computer players take their turns automatically. They bank when they have two sh
 | High two-note phrase | A human player was added |
 | Lower two-note phrase | A computer player was added |
 | Wheel clicks and a noise burst | The starting player is being chosen |
-| A noise sweep, then a die-type tone | The dice are rolling; green is a triangle, yellow a square, red a sawtooth |
+| A noise sweep, a die-type tone, then rolling echoes | Drawing and rolling the dice; green is a triangle, yellow a square, red a sawtooth |
 | A rising tone and a Pac-Man image | A brain |
 | Footstep pairs and a running figure | A runner |
 | A descending tone and a skull | A shotgun |
-| Two very low tones and a sad face | You rolled the third shotgun and busted |
-| A rising high beep for each point | Brains are being banked |
-| A happy face and a five-note fanfare | The bank is complete |
-| A six-note phrase and speech | The final round begins |
+| Two very low tones and a sad face (or angry face for a computer) | Third shotgun; bust |
+| A high two-note chime repeated for each point of the total score | Brains are being banked |
+| A happy face and a six-note fanfare | The bank is complete |
+| A six-note phrase and speech | The final round begins, or the score to beat is raised |
 | A long fanfare and speech | The winner |
 | Spoken player numbers | Whose turn it is |
 | Spoken load prompt | A saved game is available |
@@ -140,7 +140,6 @@ Computer players take their turns automatically. They bank when they have two sh
 - On startup, if a save exists, the board asks "Would you like to resume your saved game?"
   - **Button A** (or **Fire 1**) loads it.
   - **Button B** (or **Fire 2**) asks to delete it. Turn the display face down (or press **Joypad Down**) to confirm.
-  - Any other action leaves the save alone.
 - Loading announces each player's score and whose turn it is.
 
 The save is written at the end of a turn. If you stop in the middle, the current turn's unbanked brains are not saved.

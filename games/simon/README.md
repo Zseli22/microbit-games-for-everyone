@@ -23,7 +23,7 @@ There are four modes: normal, random, reverse, and tricky. The mode changes how 
 
 - Use a micro:bit V2.
 - On a bare board, the V2's built-in speaker provides the sound. No headphones or external speaker are needed.
-- With the controller, the buzzer provides the sound and the vibration motor gives a short buzz on a wrong answer.
+- With the controller, the buzzer provides the sound and the vibration motor buzzes on a wrong answer.
 - There is no save. Each run starts fresh.
 
 ## Controls
@@ -61,7 +61,7 @@ Press and hold a direction until you hear its tone. Release when the board has a
    - **Normal** — one new tone is added each round.
    - **Random** — the whole sequence is replaced with a new random sequence each round. It is not cumulative.
    - **Reverse** — you hear the sequence forward and must enter it backwards.
-   - **Tricky** — fake tones are inserted into the middle of the sequence. You must ignore them.
+   - **Tricky** — fake tones temporarily replace some of the middle tones in the sequence. You must ignore them.
 4. Press **Right** to start. The first sequence is one tone.
 5. Listen to the sequence. Each tone is paired with a bar of light: Up is the top bar, Right is the right column, Down is the bottom bar, Left is the left column.
 6. Repeat the sequence by pressing or holding the matching directions in order. Each correct press plays its tone and shows its bar.
@@ -76,7 +76,7 @@ Press and hold a direction until you hear its tone. Release when the board has a
 
 **Reverse.** The board plays the sequence forward. You enter it in reverse order. On the next round, the board adds a new tone to the original order and plays the whole thing forward again.
 
-**Tricky.** From the third tone onward, the board may insert up to one fake for every three real tones. A fake is a full square on the display and a low A2 tone. It appears in the middle of the sequence, never as the first or last tone. Do not press anything for a fake; skip it. When you complete the round, the fakes are replaced with the real tones for the next round.
+**Tricky.** From the third tone onward, the board may temporarily replace up to one tone for every three tones in the sequence with a fake. A fake is a hollow square outline on the display and a low A2 tone. It only replaces tones in the middle of the sequence, never the first or last tone. Do not press anything for a fake; skip it. When you complete the round, the hidden real tones return for the next round.
 
 ### Mode and speed tips
 
@@ -92,13 +92,12 @@ The speed setting is remembered for the session. A failed run resets the current
 | Second tone, right column | Right |
 | Lowest tone, bottom bar | Down |
 | Third tone, left column | Left |
-| Very low A2 tone, full square | A fake in Tricky mode; ignore it |
+| Very low A2 tone, hollow square outline | A fake in Tricky mode; ignore it |
 | Short high beep | Speed increased |
 | Short lower beep | Speed decreased |
 | A tone when the mode changes | The mode's bar-position tone; the name is not spoken, so switching stays fast |
-| A low buzz for about a second | You pressed the wrong direction |
-| A short vibration | Wrong answer on the controller |
-| Spoken comment | A reaction to your run; the comments get more impressed as the sequence gets longer |
+| A low buzz and controller vibration for about a second | You pressed the wrong direction |
+| Spoken comment | A reaction to your run; shorter runs get a teasing remark, and runs of eight or more earn a grudgingly impressed one |
 
 The four direction tones are close together, especially Down and Left. A quiet room helps.
 

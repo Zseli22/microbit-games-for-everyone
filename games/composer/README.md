@@ -61,15 +61,15 @@ The controls change meaning with the current mode. The tables below explain each
 
 ### The sequence menu
 
-The display shows the selected sequence number, or a plus sign for a new sequence.
+The display shows the selected sequence number (starting at 0), or a plus sign for a new sequence.
 
 | Action | What it does |
 | --- | --- |
-| Previous or next | Move through the saved sequences and the new-sequence slot. The number is spoken. |
+| Previous or next | Move through the saved sequences and the new-sequence slot. The sequence number (or "New sequence") is spoken. |
 | Action A (Button A or Fire 1) | Load the selected sequence, or start a new one. The board says "Loaded" or "Creating new sequence." |
 | Action B (Button B or Fire 2) | Ask to delete the selected sequence. The board asks for a downward confirmation. |
 | Face down or Joypad Down | Confirm the deletion. The sequence is removed and a low three-note phrase plays. |
-| Any other button or a shake | Cancel the deletion. The board says "Cancelled." |
+| Action A, Action B, or a shake | Cancel the deletion. The board says "Cancelled." |
 | Shake, or tap Shift on the controller | Hear how many notes are in the sequence and its tempo in BPM. |
 
 You cannot delete the new-sequence slot; it is not a saved sequence.
@@ -85,7 +85,7 @@ This is where you choose the note.
 - **Face down** (or **Joypad Down**) starts or stops looped playback.
 - **Shift** (the logo or Joypad Up) opens the **shift menu**.
 
-The note range is C2 to B7, six octaves. A new sequence starts on C4.
+The note range is C2 to B7, six octaves. On startup, the editor begins on C4 with a length of 1 tick.
 
 ### Length mode
 
@@ -132,8 +132,9 @@ The tempo is saved with the sequence.
 
 | Sound | Meaning |
 | --- | --- |
-| A musical note | The note you selected, or the note being added |
-| A short high beep | A note or rest was added |
+| A musical note | The note you selected or previewed |
+| A short high beep | A note was added |
+| A short low beep | A rest was added |
 | A short beep when switching to length mode | The board is now editing note length |
 | A short beep when switching to pitch mode | The board is now editing pitch |
 | A short higher beep when opening shift | The shift menu is open |

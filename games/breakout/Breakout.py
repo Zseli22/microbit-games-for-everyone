@@ -296,6 +296,8 @@ def main():
             multiply=0
             health=100
             teleport=0
+            if speed_active:
+                speed=original_speed
             speed_active=False
             speed_countdown=0
             lives-=1

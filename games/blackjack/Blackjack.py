@@ -1,7 +1,5 @@
 from microbit import *
 import random,speech,os
-pin1.set_touch_mode(pin1.CAPACITIVE)
-pin2.set_touch_mode(pin2.CAPACITIVE)
 full_deck=[]
 full_deck.extend([0]*16)
 for i in range(1,10):
@@ -150,10 +148,10 @@ def main():
                         sleep(200)
                     display.clear()
                     sleep(500)
-            if increase==True and bet+5<=coins:
+            if increase==True and bet<coins:
                 if bet==1:
-                    bet+=4
-                elif bet+5>coins:
+                    bet=min(5,coins)
+                elif bet+5>=coins:
                     bet=coins
                 else:
                     bet+=5
@@ -163,8 +161,10 @@ def main():
                     speech.pronounce('ao5l ih8n.',pin=music_pin)
                 sleep(200)
             elif decrease==True and bet>1:
-                if bet==5:
-                    bet-=4
+                if bet<=5:
+                    bet=1
+                elif bet%5!=0:
+                    bet=5*(bet//5)
                 else:
                     bet-=5
                 audio.play(audio.SoundEffect(freq_start=scale(bet,from_=(0,100),to=(300,1600)),freq_end=scale(bet,from_=(0,100),to=(300,1600)),duration=100),pin=music_pin)
@@ -193,7 +193,7 @@ def main():
                     speech.pronounce('bah3stih8d.',pin=music_pin)
                     state='lose'
                     sleep(300)
-                if double==True or total==21:
+                elif double==True or total==21:
                     state='dealer'
             elif alt==True:
                 if double==True:
@@ -267,10 +267,10 @@ def main():
             double=False
             display.scroll(coins,delay=50)
             speech.say('You now have '+str(coins)+' coins.',pin=music_pin)
-            if coins==0:
+            if coins<=0:
                 reset()
             if bet>coins:
-                bet=5*(coins//5)
+                bet=max(1,5*(coins//5))
                 display.scroll(bet,delay=50)
                 speech.say('Your bet is now down to,'+str(bet)+'.',pin=music_pin)
             state='waiting'

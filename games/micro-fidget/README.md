@@ -15,7 +15,7 @@ Seven quick sensory challenges in one menu. A fidget toy, a reaction test, and a
 
 ## What it is
 
-MicroFidget is a menu of seven short activities. Some are pure fidgeting: mash a button, shake the board, tap the logo. Some test timing or reactions. Two use the microphone. The last one is a tiny game of keep-up.
+MicroFidget is a menu of seven short activities. Some are pure fidgeting: mash a button, shake the board, tap the logo. Some test timing or reactions. One uses the microphone. The last one is a tiny game of keep-up.
 
 Each activity has its own high score, and the board remembers them while MicroFidget stays on the board. The menu speaks the name of each activity, and a shake gives a spoken description.
 
@@ -45,34 +45,36 @@ There is no controller support in this version. MicroFidget is a bare-board prog
 ### The menu
 
 1. On startup, the board says "Select game" and shows a heart.
-2. Press **Button A** to move through games 1 to 7. Each press plays a rising menu tone, and the display shows the game number.
+2. Press **Button A** to move through the seven games. Each press plays a rising menu tone, and the display shows the game's index from 0 to 6.
 3. Stop on a game for about a second. The board speaks its name.
 4. **Shake** to hear a description of the game.
 5. **Touch the logo** to hear the high score.
-6. Press **Button B** to start. A three-two-one countdown plays, then the game begins.
+6. Press **Button B** to start. A three-two-one-zero countdown plays before every game begins.
 
 ### The seven games
 
-**1. Mash it!**  
+**0. Mash it!**  
 Press **Button A** as many times as you can in five seconds. Every press makes a short blip at a random pitch. Your score is the number of presses.
 
-**2. Shake it!**  
-Shake the board as hard as you can for five seconds. The pitch rises with the strength of the shake. Your score is the strongest shake the accelerometer registered.
+**1. Shake it!**  
+Shake the board as hard as you can for five seconds. The pitch rises each time you beat your strongest shake so far. Your score is the strongest shake the accelerometer registered.
 
-**3. Tap it!**  
+**2. Tap it!**  
 Tap the **logo** as many times as you can in five seconds. Each tap makes a short blip. Your score is the number of taps.
 
-**4. Time check.**  
-Press **Button A** to hear a reference tone of random length, between one and four seconds. Listen to how long it lasts. Then press and hold **Button A** for what you think is the same length, and release. The board tells you the reference length and your length in milliseconds, then gives you an accuracy percentage. A score of 100 means perfect.
+**3. Time check.**  
+After the countdown, the board shows a heart. Press **Button A** to hear a reference tone of random length, between one and four seconds. Listen to how long it lasts. Then press and hold **Button A** (a steady A4 tone plays while you hold) for what you think is the same length, and release. The board tells you the reference length and your length in milliseconds, then gives you an accuracy percentage. A score of 100 means perfect.
 
-**5. hurry up!**  
-This is a reaction test with ten rounds. After a two-second pause, the display brightens and the tone rises through three steps: low, medium, and high. Press **Button A** as soon as you hear the highest step. Your score is the average reaction time in milliseconds, so **lower is better**. Pressing before the highest step adds a 1000 millisecond penalty for that round.
+**4. hurry up!**  
+This is a reaction test with ten rounds. After a two-second pause, the display brightens and the tone rises through three steps: low (A3), medium (A4), and high (A5). Press **Button A** as soon as you hear the highest step. Your score is the average reaction time in milliseconds, so **lower is better**. Pressing early during the medium step plays a low buzz and adds a 1000 millisecond penalty for that round.
 
-**6. Count and shout!**  
-Press **Button A** to start. The board plays between 15 and 40 beeps at random intervals. Count them. After the beeps, a two-tone cue tells you to answer. Make one sound per beep you counted: clap, tap the table, or shout. The microphone stops after three seconds of silence, or you can press **Button A** to finish early. The board tells you how many sounds it detected and how many beeps there really were, then gives you an accuracy percentage.
+**5. Count and shout!**  
+After the countdown, the board shows a heart. Press **Button A** to start. The board plays between 15 and 40 beeps at random intervals. Count them. After the beeps, a two-tone cue tells you to answer. Make one sound per beep you counted: clap, tap the table, or shout. Each detected sound plays a rising confirmation tone. The microphone stops after three seconds of silence (playing a falling two-tone cue), or you can press **Button A** to finish early. The board tells you how many sounds it detected and how many beeps there really were, then gives you an accuracy percentage.
 
-**7. Micro Pong**  
-Keep the marker away from the edges of the display. The marker moves one step at a time along the middle row. Press **Button A** when the marker is on the left side, and **Button B** when it is on the right side. Each good press scores a point and makes the rally a little faster. If the marker reaches an edge, the game ends.
+**6. Micro Pong**  
+Keep the marker from falling off the edges of the display. The marker moves one step at a time along the middle row (columns 0 to 4). Press **Button A** when the marker is on the left side (column 0 or 1), and **Button B** when it is on the right side (column 3 or 4). Each good hit bounces the marker back, scores a point, and speeds up the rally slightly. If the marker steps off the left or right edge, the game ends.
+
+Each step has a tone so you can play by ear: C5 when you hit from the left, G5 on the start and when you hit from the right, E5 as the marker crosses the centre, a quick high C7 tick for other steps, and a falling sweep if you miss.
 
 ## What you hear
 
@@ -82,10 +84,14 @@ Keep the marker away from the edges of the display. The marker moves one step at
 | Spoken game name | Played about a second after you stop on a game |
 | Spoken description | Played when you shake at the menu |
 | Spoken high score | Played when you touch the logo at the menu |
-| Three-note countdown, then a long high tone | The game is about to start |
-| Short blips | A tap or button press registered |
-| A rising or falling pitch | Shake strength, or the reaction-test step |
-| A two-tone cue in Count and shout | Start making your sounds |
+| Three-note countdown (C5), then a long high tone (C6) | The game is about to start |
+| Short blips | A button press or logo tap registered |
+| A rising pitch | A new peak shake strength in Shake it!, or a reaction-test step (A3, A4, A5) in hurry up! |
+| A steady A4 tone | Holding Button A in Time check. |
+| Rising two-note chime, or low A2 buzz | Valid reaction or early press penalty in hurry up! |
+| A rising two-tone cue, confirmation tones, then a falling two-tone cue | Start answering, sound detected, and time up in Count and shout! |
+| C5, E5, G5, and quick C7 ticks, or a falling sweep | Left hit, centre crossing, right hit, outer step, or miss in Micro Pong |
+| A low buzz and an X | Time up or missed rally in Mash it!, Shake it!, Tap it!, or Micro Pong |
 | A short five-note melody | The game ended and your score is being read |
 | A longer rising fanfare | You set a new high score |
 | Spoken "Press B to play again" | The result is over |
@@ -106,10 +112,12 @@ At the end of a game, the board scrolls your score and speaks the result. If you
 
 ### Reset all high scores
 
+This option is available once at least one high score has been saved.
+
 1. Hold **Button A** while the board starts or while you press reset.
 2. The board asks "Reset all high scores to 0?" and shows a pair of scissors.
-3. Press **Button A** to arm the reset. It says "Face down to confirm reset."
-4. Turn the display face down to confirm, or press **Button B** to cancel.
+3. Press **Button A** to arm the reset (if you are still holding Button A, it arms right away). It says "Face down to confirm reset."
+4. Turn the display face down to confirm, or press **Button B** to cancel. **hurry up!** resets to its default of 1000 milliseconds, and the other six reset to 0.
 
 ## Accessibility notes
 

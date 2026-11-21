@@ -108,7 +108,7 @@ SAVE_FILE = "save.txt"
 
 When loading, handle a missing file, an empty file, and malformed data without crashing. Tell the player in the guide that the save is temporary. Do not promise that files can be backed up or kept alongside another game.
 
-To clear a save, reflash the program. The `MICROBIT` drive is for `.hex` files, not for browsing the MicroPython filesystem.
+Provide an in-game way to delete or reset a save where it makes sense (with a confirmation step). Reflashing the program also clears the filesystem; the `MICROBIT` drive is for `.hex` files, not for browsing MicroPython files.
 
 ### Reset and restart
 
